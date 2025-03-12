@@ -1,0 +1,51 @@
+html,
+body {
+    height: 100%;
+}
+
+body, textarea, input {
+    color: #8b7969;
+}
+
+textarea::placeholder,
+input::placeholder {
+    color: #beb1a6;
+}
+
+.app {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* ヘッダー */
+.header {
+    display: grid;
+    align-items: center;
+    padding: 16px 0;
+    height: 80px;
+    border: 1px solid #e0dfde;
+    text-align: center;
+    font-family: serif;
+
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr;
+}
+
+.header__heading {
+    font-weight: lighter;
+    font-size: 32px;
+
+    grid-column: 2;
+}
+
+.header__link {
+    margin: 0 auto;
+    width: 80px;
+    border: 1px solid #d9c6b5;
+    background-color: #f0f0f0;
+    color: #d9c6b5;
+    text-decoration: none;
+
+    grid-column: 3;
+}
