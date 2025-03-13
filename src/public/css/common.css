@@ -49,3 +49,32 @@ input::placeholder {
 
     grid-column: 3;
 }
+
+/* コンテンツ */
+.content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: center;
+    padding: 48px;
+}
+
+.content__heading {
+    text-align: center;
+    font-weight: 100;
+    font-style: 32px;
+    font-family: serif;
+}
+
+/* ボタン */
+.btn {
+    display: block;
+    padding: 8px 32px;
+    border: none;
+    background-color: #82756a;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* ページネーション */
