@@ -8,7 +8,7 @@
 <div class="contact-form">
     <h2 class="contact-form__heading content__heading">Contact</h2>
     <div class="contact-form__inner">
-        <form action="/confirm" method="post">
+        <form action="/confirm" method="post" enctype="multipart/form-data">
             @csrf
             <div class="contact-form__group contact-form__name-group">
                 <label class="contact-form__label" for="name">
@@ -153,6 +153,13 @@
                     </label>
                     @endforeach
                 </div>
+            </div>
+
+            <div class="contact-form__group">
+                <label class="contact-form__label">
+                    イメージ写真
+                </label>
+                <input class="contact-form__image-input" type="file" name="image_file">
             </div>
             <input class="contact-form__btn btn" type="submit" value="確認画面">
         </form>

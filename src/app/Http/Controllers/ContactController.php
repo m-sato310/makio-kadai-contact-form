@@ -20,6 +20,7 @@ class ContactController extends Controller
     public function confirm(ContactRequest $request)
     {
         $contacts = $request->all();
+        $contacts['image_file'] = $request->image_file->store('img', 'public');
         $category = Category::find($request->category_id);
         $channels = Channel::find($request->channel_ids);
         return view('confirm', compact('contacts', 'category', 'channels'));
@@ -42,7 +43,8 @@ class ContactController extends Controller
                 'tell',
                 'address',
                 'building',
-                'detail'
+                'detail',
+                'image_file'
             ])
         );
         $contact->channels()->sync($request->channel_ids);

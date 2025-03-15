@@ -71,6 +71,13 @@
                         @endforeach
                     </td>
                 </tr>
+                <tr class="confirm-form__row">
+                    <th class="confirm-form__label">イメージ写真</th>
+                    <td class="confirm-form__data">
+                        <img src="{{ '/storage/' . $contacts['image_file'] }}" alt="画像を表示">
+                        <input type="hidden" name="image_file" value="{{ $contacts['image_file'] }}">
+                    </td>
+                </tr>
             </table>
             <div class="confirm-form__btn-inner">
                 <input class="confirm-form__send-btn btn" type="submit" value="送信" name="send">
