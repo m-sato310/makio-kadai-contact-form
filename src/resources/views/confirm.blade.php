@@ -62,6 +62,15 @@
                     <td class="confirm-form__data">{{ $contacts['detail'] }}</td>
                     <input type="hidden" name="detail" value="{{ $contacts['detail'] }}">
                 </tr>
+                <tr class="confirm-form__row">
+                    <th class="confirm-form__label">知ったきっかけ</th>
+                    <td class="confirm-form__data">
+                        @foreach ($channels as $channel)
+                        <input type="text" name="channel_contents[]" value="{{ $channel->content }}" readonly>
+                        <input type="hidden" name="channel_ids[]" value="{{ $channel->id }}">
+                        @endforeach
+                    </td>
+                </tr>
             </table>
             <div class="confirm-form__btn-inner">
                 <input class="confirm-form__send-btn btn" type="submit" value="送信" name="send">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ContactRequest;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Channel;
 use App\Models\Contact;
 
 class ContactController extends Controller
@@ -12,14 +13,16 @@ class ContactController extends Controller
     public function index()
     {
         $categories = Category::all();
-        return view('contact', compact('categories'));
+        $channels = Channel::all();
+        return view('contact', compact('categories', 'channels'));
     }
 
     public function confirm(ContactRequest $request)
     {
         $contacts = $request->all();
         $category = Category::find($request->category_id);
-        return view('confirm', compact('contacts', 'category'));
+        $channels = Channel::find($request->channel_ids);
+        return view('confirm', compact('contacts', 'category', 'channels'));
     }
 
     public function store(ContactRequest $request)
@@ -29,7 +32,7 @@ class ContactController extends Controller
         }
 
         $request['tell'] = $request->tel_1 . $request->tel_2 . $request->tel_3;
-        Contact::create(
+        $contact = Contact::create(
             $request->only([
                 'category_id',
                 'first_name',
@@ -42,7 +45,15 @@ class ContactController extends Controller
                 'detail'
             ])
         );
-
+        $contact->channels()->sync($request->channel_ids);
         return view('thanks');
+    }
+
+    public function admin()
+    {
+        $contacts = Contact::with('category')->paginate(7);
+        $categories = Category::all();
+        $csvData = Contact::all();
+        return view('admin', compact('contacts', 'categories', 'csvData'));
     }
 }

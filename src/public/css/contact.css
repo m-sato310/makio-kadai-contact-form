@@ -116,6 +116,18 @@
     color: #beb1a6;
 }
 
+.contact-form__channel-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.contact-form__channel-input {
+    width: 16px; 
+    height: 16px;
+    accent-color: #beb1a6;
+}
+
 .contact-form__btn {
     margin: 32px auto 0;
 }

@@ -140,6 +140,20 @@
                     @enderror
                 </p>
             </div>
+
+            <div class="contact-form__group">
+                <label class="contact-form__label">
+                    知ったきっかけ
+                </label>
+                <div class="contact-form__channel-inputs">
+                    @foreach ($channels as $channel)
+                    <label class="contact-form__channel-label">
+                        <input class="contact-form__channel-input" type="checkbox" name="channel_ids[]" value="{{ $channel->id }}" {{ in_array($channel->id, old('channel_ids', []))? 'checked' : '' }}>
+                        {{ $channel->content }}
+                    </label>
+                    @endforeach
+                </div>
+            </div>
             <input class="contact-form__btn btn" type="submit" value="確認画面">
         </form>
     </div>

@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Database\Factories\ContactFactory;
 use Illuminate\Database\Seeder;
 use App\Models\Contact;
+use Illuminate\Broadcasting\Channel;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,8 +18,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             CategorySeeder::class,
+            ContactSeeder::class,
+            ChannelSeeder::class
         ]);
-
-        Contact::factory()->count(35)->create();
     }
 }
