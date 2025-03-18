@@ -13,9 +13,9 @@
             <table class="confirm-form__table">
                 <tr class="confirm-form__row">
                     <th class="confirm-form__label">お名前</th>
-                    <td class="confirm-form__data">{{ $contacts['first_name'] }}&nbsp;{{ $contacts['last_name'] }}</td>
-                    <input type="hidden" name="first_name" value="{{ $contacts['first_name'] }}">
+                    <td class="confirm-form__data">{{ $contacts['last_name'] }}&nbsp;{{ $contacts['first_name'] }}</td>
                     <input type="hidden" name="last_name" value="{{ $contacts['last_name'] }}">
+                    <input type="hidden" name="first_name" value="{{ $contacts['first_name'] }}">
                 </tr>
                 <tr class="confirm-form__row">
                     <th class="confirm-form__label">性別</th>

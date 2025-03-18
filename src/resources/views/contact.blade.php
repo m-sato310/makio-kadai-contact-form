@@ -15,15 +15,15 @@
                     お名前<span class="contact-form__required">※</span>
                 </label>
                 <div class="contact-form__name-inputs">
-                    <input class="contact-form__input contact-form__name-input" type="text" name="first_name" id="name" value="{{ old('first_name') }}" placeholder="例：山田">
-                    <input class="contact-form__input contact-form__name-input" type="text" name="last_name" id="name" value="{{ old('last_name') }}" placeholder="例：太郎">
+                    <input class="contact-form__input contact-form__name-input" type="text" name="last_name" id="name" value="{{ old('last_name') }}" placeholder="例：山田">
+                    <input class="contact-form__input contact-form__name-input" type="text" name="first_name" id="name" value="{{ old('first_name') }}" placeholder="例：太郎">
                 </div>
                 <div class="contact-form__error-message">
-                    @if ($errors->has('first_name'))
-                    <p class="contact-form__error-message-first-name">{{ $errors->first('first_name') }}</p>
-                    @endif
                     @if ($errors->has('last_name'))
                     <p class="contact-form__error-message-last-name">{{ $errors->first('last_name') }}</p>
+                    @endif
+                    @if ($errors->has('first_name'))
+                    <p class="contact-form__error-message-first-name">{{ $errors->first('first_name') }}</p>
                     @endif
                 </div>
             </div>
