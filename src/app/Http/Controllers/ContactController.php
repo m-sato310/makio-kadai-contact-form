@@ -58,4 +58,19 @@ class ContactController extends Controller
         $csvData = Contact::all();
         return view('admin', compact('contacts', 'categories', 'csvData'));
     }
+
+    public function search(Request $request)
+    {
+        if ($request->has('reset')) {
+            return redirect('/admin')->withInput();
+        }
+        $query = Contact::query();
+
+        $query = $this->getSearchQuery($request, $query);
+
+        $contacts = $query->paginate(7);
+        $csvData = $query->get();
+        $categories = Category::all();
+        return view('admin', compact('contacts', 'categories', 'csvData'));
+    }
 }
