@@ -50,7 +50,7 @@
                 <input class="export_btn btn" type="submit" value="エクスポート">
             </form>
             {{-- {{ $contacts->appends(request()->query())->links('vendor.pagination.custom') }} --}}
-            {{ $contacts->links() }}
+            {{ $contacts->links('pagination::bootstrap-4') }}
             <style>
                 svg.w-5.h-5 {
                     /*paginateメソッドの矢印の大きさ調整のために追加*/
