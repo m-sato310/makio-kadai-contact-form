@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ContactRequest;
+use App\Http\Requests\ProfileRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Category;
 use App\Models\Channel;
 use App\Models\Contact;
+use App\Models\Profile;
 
 class ContactController extends Controller
 {
@@ -49,6 +52,21 @@ class ContactController extends Controller
         );
         $contact->channels()->sync($request->channel_ids);
         return view('thanks');
+    }
+
+    public function profile()
+    {
+        return view('profile');
+    }
+
+    public function register(ProfileRequest $request)
+    {
+        $profile = Profile::create([
+            'user_id' => Auth::id(),
+            'gender' => $request->gender,
+            'position' => $request->position,
+        ]);
+            return redirect('/admin');
     }
 
     public function admin()

@@ -4,6 +4,10 @@
 <link rel="stylesheet" href="{{ asset('css/auth/login.css') }}">
 @endsection
 
+@section('link')
+<a class="header__link" href="/register">register</a>
+@endsection
+
 @section('content')
 <div class="login-form">
     <h2 class="login-form__heading content__heading">Login</h2>

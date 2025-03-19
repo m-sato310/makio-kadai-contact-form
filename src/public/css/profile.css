@@ -1,0 +1,91 @@
+.content {
+    background-color: #f1ece7;
+}
+
+.profile-form__inner {
+    display: flex;
+    justify-content: center;
+    margin-top: 48px;
+}
+
+.profile-form__form {
+    padding: 64px 96px;
+    width: 40vw;
+    border: 1px solid #c5b9b0;
+    border-radius: 8px;
+    background-color: #fdfefe;
+}
+
+@media screen and (max-width: 1200px) {
+    .profile-form__form {
+        width: 60vw;
+    }
+}
+
+.profile-form__group {
+    margin-top: 32px;
+}
+
+.profile-form__group:first-of-type {
+    margin-top: 0;
+}
+
+.profile-form__label {
+    display: block;
+    margin-top: 8px;
+}
+
+.profile-form__gender-inputs {
+    display: flex;
+    justify-content: left;
+}
+
+.profile-form__gender-option {
+    margin-right: 64px;
+}
+
+.profile-form__gender-input {
+    position: absolute;
+
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.profile-form__gender-text {
+    display: flex;
+    align-items: center;
+}
+
+.profile-form__gender-text::before {
+    display: block;
+    margin-right: 8px;
+    width: 24px;
+    height: 24px;
+    border: 1px solid #8b7969;
+    border-radius: 50%;
+    content: '';
+}
+
+.profile-form__gender-input:checked+.profile-form__gender-text::before {
+    background: #8b7969;
+}
+
+.profile-form__input {
+    display: block;
+    padding: 8px 12px;
+    width: 100%;
+    height: 48px;
+    border: none;
+    background-color: #f4f4f4;
+    color: #beb1a6;
+    font-family: serif;
+}
+
+.profile-form__error-message {
+    color: #ff9494;
+}
+
+.profile-form__btn {
+    margin: 60px auto 0;
+}
