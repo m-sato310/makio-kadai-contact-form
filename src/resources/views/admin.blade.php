@@ -49,15 +49,7 @@
                 @csrf
                 <input class="export_btn btn" type="submit" value="エクスポート">
             </form>
-            {{-- {{ $contacts->appends(request()->query())->links('vendor.pagination.custom') }} --}}
-            {{ $contacts->links('pagination::bootstrap-4') }}
-            <style>
-                svg.w-5.h-5 {
-                    /*paginateメソッドの矢印の大きさ調整のために追加*/
-                    width: 30px;
-                    height: 30px;
-                }
-            </style>
+            {{ $contacts->appends(request()->query())->links('vendor.pagination.custom') }}
         </div>
 
         <!-- データの一覧表示 -->
