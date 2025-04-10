@@ -34,13 +34,13 @@
                 </label>
                 <div class="contact-form__gender-inputs">
                     <div class="contact-form__gender-option">
-                        <label class="contact-form__gender-label">
+                        <label class="contact-form__gender-label" for="male">
                             <input class="contact-form__gender-input" name="gender" type="radio" id="male" value="1" {{ old('gender')==1 || old('gender')==null ? 'checked' : '' }}>
                             <span class="contact-form__gender-text">男性</span>
                         </label>
                     </div>
                     <div class="contact-form__gender-option">
-                        <label class="contact-form__gender-label">
+                        <label class="contact-form__gender-label" for="female">
                             <input class="contact-form__gender-input" type="radio" name="gender" id="female" value="2" {{ old('gender')==2 ? 'checked' : ''}}>
                             <span class="contact-form__gender-text">女性</span>
                         </label>

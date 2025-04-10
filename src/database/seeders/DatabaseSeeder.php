@@ -18,8 +18,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             CategorySeeder::class,
-            ContactSeeder::class,
-            ChannelSeeder::class
+            ChannelSeeder::class,
+            // ContactSeeder::class,
         ]);
     }
 }
