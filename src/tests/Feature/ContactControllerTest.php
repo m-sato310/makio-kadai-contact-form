@@ -7,6 +7,8 @@ use App\Models\Channel;
 use App\Models\Contact;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class ContactControllerTest extends TestCase
@@ -26,15 +28,19 @@ class ContactControllerTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertViewIs('contact');
-        $response->assertViewHas('categories');
-        $response->assertViewHas('channels');
+        $response->assertViewHas('categories', Category::all());
+        $response->assertViewHas('channels', Channel::all());
     }
 
     public function test_confirm()
     {
+        Storage::fake('public');
+        
         $category = Category::create(['content' => 'テストカテゴリ']);
         $channel1 = Channel::create(['content' => 'メール']);
         $channel2 = Channel::create(['content' => '電話']);
+
+        $file = UploadedFile::fake()->image('test.png');
 
         $formData = [
             'first_name' => '太郎',
@@ -49,9 +55,11 @@ class ContactControllerTest extends TestCase
             'detail' => '問い合わせ内容の詳細です',
             'category_id' => $category->id,
             'channel_ids' => [$channel1->id, $channel2->id],
+            'image_file' => $file,
         ];
 
         $response = $this->post('/confirm', $formData);
+        $this->assertCount(1, Storage::disk('public')->files('img'));
 
         $response->assertStatus(200);
         $response->assertViewIs('confirm');
@@ -67,6 +75,10 @@ class ContactControllerTest extends TestCase
         $channel1 = Channel::create(['content' => 'SNS']);
         $channel2 = Channel::create(['content' => '広告']);
 
+        Storage::fake('public');
+        $file = UploadedFile::fake()->image('test.png');
+        $file->storeAs('img', $file->name, 'public');
+
         $formData = [
             'first_name' => '太郎',
             'last_name' => 'テスト',
@@ -80,7 +92,7 @@ class ContactControllerTest extends TestCase
             'detail' => 'これはテストメッセージです',
             'category_id' => $category->id,
             'channel_ids' => [$channel1->id, $channel2->id],
-            'image_file' => 'img/test.jpg',
+            'image_file' => $file->name,
         ];
 
         $response = $this->post('/thanks', $formData);
@@ -93,6 +105,7 @@ class ContactControllerTest extends TestCase
             'last_name' => 'テスト',
             'email' => 'test@example.com',
             'category_id' => $category->id,
+            'image_file' => 'test.png',
         ]);
 
         $contact = Contact::where('email', 'test@example.com')->first();
@@ -219,6 +232,12 @@ class ContactControllerTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertViewIs('admin');
+        $response->assertSeeInOrder([
+            'テスト花子',
+            '女性',
+            'hanako@example.com',
+            '質問',
+        ]);
 
         $contacts = $response->viewData('contacts');
         $this->assertCount(1, $contacts);
@@ -280,6 +299,49 @@ class ContactControllerTest extends TestCase
         ]);
     }
 
+    public function test_login()
+    {
+        $user = User::factory()->create([
+            'email' => 'test@test.com',
+            'password' => bcrypt('password'),
+        ]);
+
+        $response = $this->post('/login', [
+            'email' => 'test@test.com',
+            'password' => 'password',
+        ]);
+
+        $response->assertRedirect('/admin');
+        $this->assertAuthenticatedAs($user);
+    }
+
+    public function test_login_invalid_credentials()
+    {
+        User::factory()->create([
+            'email' => 'test@test.com',
+            'password' => bcrypt('password'),
+        ]);
+
+        $response = $this->post('/login', [
+            'email' => 'test@test.com',
+            'password' => 'wrong',
+        ]);
+
+        $response->assertSessionHasErrors();
+
+        $this->assertGuest();
+    }
+
+    public function test_logout()
+    {
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        $response = $this->post('/logout');
+        $response->assertRedirect('/');
+        $this->assertGuest();
+    }
+
+
     public function test_confirm_validation()
     {
         $response = $this->post('/confirm', []);
@@ -287,16 +349,16 @@ class ContactControllerTest extends TestCase
         $response->assertRedirect('/');
 
         $response->assertSessionHasErrors([
-            'first_name',
-            'last_name',
-            'gender',
-            'email',
-            'tel_1',
-            'tel_2',
-            'tel_3',
-            'address',
-            'category_id',
-            'detail',
+            'first_name' => '姓を入力してください',
+            'last_name' => '名を入力してください',
+            'gender' => '性別を選択してください',
+            'email' => 'メールアドレスを入力してください',
+            'tel_1' => '電話番号を入力してください',
+            'tel_2' => '電話番号を入力してください',
+            'tel_3' => '電話番号を入力してください',
+            'address' => '住所を入力してください',
+            'category_id' => 'お問い合わせの種類を選択してください',
+            'detail' => 'お問い合わせ内容を入力してください',
         ]);
     }
 
